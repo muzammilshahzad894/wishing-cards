@@ -22,11 +22,16 @@
                     <div class="card-inner">
                         <img src="{{ asset('storage/' . $design->image) }}" alt="" class="card-design-bg" id="designBg" crossorigin="anonymous" onerror="this.style.display='none'; this.nextElementSibling.classList.remove('d-none');">
                         <div class="card-design-fallback d-none" id="designFallback">Design image</div>
-                        <div class="card-photo-frame" id="photoFrame" style="left: {{ $design->photo_x_pct }}%; top: {{ $design->photo_y_pct }}%; width: {{ $design->photo_width_pct }}%; height: {{ $design->photo_height_pct }}%; transform: translate(-50%, -50%) rotate({{ $design->photo_rotation ?? 0 }}deg);">
-                            <div class="card-photo-placeholder" id="photoPlaceholder">
-                                <i class="fas fa-cloud-upload-alt fa-3x text-muted"></i>
+                        @php
+                            $photoShape = $design->photo_shape ?? 'rectangle';
+                        @endphp
+                        <div class="card-photo-frame card-photo-frame-{{ $photoShape }}" id="photoFrame" data-x="{{ $design->photo_x_pct }}" data-y="{{ $design->photo_y_pct }}" data-w="{{ $design->photo_width_pct }}" data-h="{{ $design->photo_height_pct }}" data-rot="{{ $design->photo_rotation ?? 0 }}" style="left: {{ $design->photo_x_pct }}%; top: {{ $design->photo_y_pct }}%; width: {{ $design->photo_width_pct }}%; height: {{ $design->photo_height_pct }}%; transform: translate(-50%, -50%) rotate({{ $design->photo_rotation ?? 0 }}deg);">
+                            <div class="card-photo-clip" id="photoClip">
+                                <div class="card-photo-placeholder" id="photoPlaceholder">
+                                    <i class="fas fa-cloud-upload-alt fa-3x card-photo-placeholder-icon"></i>
+                                </div>
+                                <img src="" alt="" class="card-photo-img d-none" id="photoImg" crossorigin="anonymous" draggable="false">
                             </div>
-                            <img src="" alt="" class="card-photo-img d-none" id="photoImg" crossorigin="anonymous" draggable="false">
                         </div>
                         <div class="card-greeting-wrap">
                             <div class="card-greeting" id="cardGreeting">{{ $design->greeting_text }}</div>
@@ -50,7 +55,7 @@
                 <input type="file" id="photoInput" accept="image/*" class="d-none">
             </div>
             <div class="d-none photo-toolbar" id="photoControls">
-                <p class="small text-muted mb-2">Drag on the card preview to rotate the photo.</p>
+                <p class="small text-muted mb-2">Drag on the photo to move it; use the mouse wheel on the photo to zoom in or out. Use buttons to rotate.</p>
                 <div class="btn-group w-100 mb-2" role="group">
                     <button type="button" class="btn btn-outline-secondary btn-sm" id="undoBtn" title="Undo"><i class="fas fa-undo"></i></button>
                     <button type="button" class="btn btn-outline-secondary btn-sm" id="redoBtn" title="Redo"><i class="fas fa-redo"></i></button>
@@ -88,10 +93,15 @@
     .card-inner { position: relative; width: 100%; height: 100%; }
     .card-design-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; display: block; }
     .card-design-fallback { position: absolute; inset: 0; background: linear-gradient(135deg, #e8e0d5 0%, #d4c4b0 100%); display: flex; align-items: center; justify-content: center; color: #8a7f72; font-size: 1.1rem; }
-    .card-photo-frame { position: absolute; overflow: hidden; background: #e8e2d9; border: 2px solid #c9b896; box-shadow: inset 0 0 0 4px #e8e0d5; cursor: grab; user-select: none; -webkit-user-select: none; }
+    .card-photo-frame { position: absolute; overflow: hidden; background: transparent; cursor: grab; user-select: none; -webkit-user-select: none; }
     .card-photo-frame:active { cursor: grabbing; }
-    .card-photo-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #999; cursor: pointer; }
-    .card-photo-img { position: absolute; inset: -50%; width: 200%; height: 200%; max-width: none; max-height: none; object-fit: cover; transform-origin: center center; pointer-events: none; }
+    .card-photo-frame.card-photo-frame-rounded { border-radius: 16px; }
+    .card-photo-frame.card-photo-frame-circle { border-radius: 50%; }
+    .card-photo-frame.card-photo-frame-ellipse { border-radius: 50%; }
+    .card-photo-clip { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: hidden; }
+    .card-photo-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+    .card-photo-placeholder-icon { opacity: 0.25; color: #666; }
+    .card-photo-img { position: absolute; width: 200%; height: 200%; max-width: none; max-height: none; object-fit: cover; transform-origin: center center; left: 50%; top: 50%; margin-left: -100%; margin-top: -100%; box-sizing: content-box; pointer-events: none; }
     .card-greeting-wrap { position: absolute; bottom: 18%; left: 0; right: 0; text-align: center; padding: 0 1rem; pointer-events: none; }
     .card-greeting { font-size: 1.25rem; font-weight: 700; color: #333; }
     .card-name-wrap { position: absolute; padding: 0 0.5rem; pointer-events: none; box-sizing: border-box; }
@@ -172,38 +182,57 @@
         this.value = '';
     });
 
-    // Rotate by mouse drag on photo frame
-    let isDragging = false, startX, startY, startAngle;
+    // Pan (move) photo by mouse/touch drag on photo frame
+    let isDragging = false, startX, startY, startPosX, startPosY;
     photoFrame.addEventListener('mousedown', function(e) {
         if (photoPlaceholder.classList.contains('d-none')) {
             isDragging = true;
             startX = e.clientX;
             startY = e.clientY;
-            startAngle = angle;
+            startPosX = posX;
+            startPosY = posY;
         }
     });
     document.addEventListener('mousemove', function(e) {
         if (!isDragging) return;
-        const dx = e.clientX - startX, dy = e.clientY - startY;
-        angle = startAngle + (dx + dy);
+        posX = startPosX + (e.clientX - startX);
+        posY = startPosY + (e.clientY - startY);
         applyPhotoTransform();
     });
-    document.addEventListener('mouseup', function() { isDragging = false; });
+    document.addEventListener('mouseup', function() {
+        if (isDragging) saveState();
+        isDragging = false;
+    });
     photoFrame.addEventListener('touchstart', function(e) {
         if (photoPlaceholder.classList.contains('d-none') && e.touches.length === 1) {
             isDragging = true;
             startX = e.touches[0].clientX;
             startY = e.touches[0].clientY;
-            startAngle = angle;
+            startPosX = posX;
+            startPosY = posY;
         }
     }, { passive: true });
     document.addEventListener('touchmove', function(e) {
         if (!isDragging || e.touches.length !== 1) return;
-        const dx = e.touches[0].clientX - startX, dy = e.touches[0].clientY - startY;
-        angle = startAngle + (dx + dy);
+        posX = startPosX + (e.touches[0].clientX - startX);
+        posY = startPosY + (e.touches[0].clientY - startY);
         applyPhotoTransform();
     }, { passive: true });
-    document.addEventListener('touchend', function() { isDragging = false; });
+    document.addEventListener('touchend', function() {
+        if (isDragging) saveState();
+        isDragging = false;
+    });
+
+    // Mouse wheel zoom on photo frame
+    photoFrame.addEventListener('wheel', function(e) {
+        if (photoPlaceholder.classList.contains('d-none')) {
+            e.preventDefault();
+            saveState();
+            const delta = e.deltaY > 0 ? -0.15 : 0.15;
+            scale = Math.max(0.3, Math.min(3, scale + delta));
+            applyPhotoTransform();
+        }
+    }, { passive: false });
 
     document.getElementById('undoBtn').addEventListener('click', function() {
         if (historyStep > 0) { historyStep--; applyState(history[historyStep]); }
@@ -240,7 +269,33 @@
     savePhotoBtn.addEventListener('click', function() {
         savePhotoBtn.disabled = true;
         savePhotoBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Saving...';
-        html2canvas(cardOutput, { scale: 1, useCORS: true, allowTaint: true, backgroundColor: '#f5f0e8', width: CARD_W, height: CARD_H }).then(function(canvas) {
+        var opt = {
+            scale: 1,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: '#f5f0e8',
+            width: CARD_W,
+            height: CARD_H,
+            onclone: function(clonedDoc) {
+                var clone = clonedDoc.getElementById('cardOutput');
+                if (!clone) return;
+                clone.style.width = CARD_W + 'px';
+                clone.style.height = CARD_H + 'px';
+                var frame = clonedDoc.getElementById('photoFrame');
+                if (frame && frame.dataset.x !== undefined) {
+                    var x = parseFloat(frame.dataset.x) || 50, y = parseFloat(frame.dataset.y) || 38;
+                    var w = parseFloat(frame.dataset.w) || 55, h = parseFloat(frame.dataset.h) || 55, rot = parseFloat(frame.dataset.rot) || 0;
+                    var leftPx = (CARD_W * x / 100) - (CARD_W * w / 100) / 2;
+                    var topPx = (CARD_H * y / 100) - (CARD_H * h / 100) / 2;
+                    frame.style.left = leftPx + 'px';
+                    frame.style.top = topPx + 'px';
+                    frame.style.width = (CARD_W * w / 100) + 'px';
+                    frame.style.height = (CARD_H * h / 100) + 'px';
+                    frame.style.transform = 'translate(0, 0) rotate(' + rot + 'deg)';
+                }
+            }
+        };
+        html2canvas(cardOutput, opt).then(function(canvas) {
             const a = document.createElement('a');
             a.download = 'birthday-card-' + Date.now() + '.png';
             a.href = canvas.toDataURL('image/png');

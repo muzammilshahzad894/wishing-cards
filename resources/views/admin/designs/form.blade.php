@@ -31,18 +31,48 @@
 <div class="card bg-light border-0 mb-3">
     <div class="card-body">
         <h6 class="card-title mb-2"><i class="fas fa-crop-alt me-2"></i>Photo frame</h6>
-        <p class="small text-muted mb-2">Drag the box to move, drag the corner to resize, drag the top handle to rotate. User's photo will appear inside this area on the frontend.</p>
-        <input type="hidden" name="photo_x_pct" id="photo_x_pct" value="{{ old('photo_x_pct', $design?->photo_x_pct ?? 50) }}">
-        <input type="hidden" name="photo_y_pct" id="photo_y_pct" value="{{ old('photo_y_pct', $design?->photo_y_pct ?? 38) }}">
-        <input type="hidden" name="photo_width_pct" id="photo_width_pct" value="{{ old('photo_width_pct', $design?->photo_width_pct ?? 55) }}">
-        <input type="hidden" name="photo_height_pct" id="photo_height_pct" value="{{ old('photo_height_pct', $design?->photo_height_pct ?? 55) }}">
+        @php
+            $px = old('photo_x_pct', $design?->photo_x_pct ?? 50);
+            $py = old('photo_y_pct', $design?->photo_y_pct ?? 38);
+            $pw = old('photo_width_pct', $design?->photo_width_pct ?? 55);
+            $ph = old('photo_height_pct', $design?->photo_height_pct ?? 55);
+            $pleft = old('photo_left_pct', $design?->photo_left_pct ?? ($px - $pw/2));
+            $ptop = old('photo_top_pct', $design?->photo_top_pct ?? ($py - $ph/2));
+            $pright = old('photo_right_pct', $design?->photo_right_pct ?? ($px + $pw/2));
+            $pbottom = old('photo_bottom_pct', $design?->photo_bottom_pct ?? ($py + $ph/2));
+        @endphp
+        <p class="small text-muted mb-2">Choose a frame shape, then <strong>drag on the image</strong> to draw the selection area. You can also move the box, drag edges/corners to resize, or use the top handle to rotate.</p>
+        <div class="mb-2">
+            <label class="form-label small">Frame shape</label>
+            <select name="photo_shape" id="photo_shape" class="form-select form-select-sm">
+                <option value="rectangle" {{ old('photo_shape', $design?->photo_shape ?? 'rectangle') == 'rectangle' ? 'selected' : '' }}>Rectangle</option>
+                <option value="rounded" {{ old('photo_shape', $design?->photo_shape ?? 'rectangle') == 'rounded' ? 'selected' : '' }}>Rounded rectangle</option>
+                <option value="circle" {{ old('photo_shape', $design?->photo_shape ?? 'rectangle') == 'circle' ? 'selected' : '' }}>Circle</option>
+                <option value="ellipse" {{ old('photo_shape', $design?->photo_shape ?? 'rectangle') == 'ellipse' ? 'selected' : '' }}>Ellipse</option>
+            </select>
+        </div>
+        <input type="hidden" name="photo_left_pct" id="photo_left_pct" value="{{ $pleft }}">
+        <input type="hidden" name="photo_top_pct" id="photo_top_pct" value="{{ $ptop }}">
+        <input type="hidden" name="photo_right_pct" id="photo_right_pct" value="{{ $pright }}">
+        <input type="hidden" name="photo_bottom_pct" id="photo_bottom_pct" value="{{ $pbottom }}">
+        <input type="hidden" name="photo_x_pct" id="photo_x_pct" value="{{ $px }}">
+        <input type="hidden" name="photo_y_pct" id="photo_y_pct" value="{{ $py }}">
+        <input type="hidden" name="photo_width_pct" id="photo_width_pct" value="{{ $pw }}">
+        <input type="hidden" name="photo_height_pct" id="photo_height_pct" value="{{ $ph }}">
         <input type="hidden" name="photo_rotation" id="photo_rotation" value="{{ old('photo_rotation', $design?->photo_rotation ?? 0) }}">
         @if($design)
         <div class="frame-editor-wrap" id="photoFrameEditor" style="max-width: 320px; aspect-ratio: 400/520; position: relative; background: #eee; border-radius: 8px; overflow: visible; touch-action: none;">
             <img src="{{ asset('storage/' . $design->image) }}" alt="" class="w-100 h-100" style="object-fit: fill; display: block; border-radius: 8px; pointer-events: none;">
-            <div class="photo-frame-box" id="photoFrameBox">
+            <div class="photo-frame-box frame-shape-{{ old('photo_shape', $design?->photo_shape ?? 'rectangle') }}" id="photoFrameBox">
                 <span class="frame-rotate-handle" id="photoRotateHandle" title="Drag to rotate">⟳</span>
-                <span class="frame-resize-handle" id="photoResizeHandle" title="Drag to resize"></span>
+                <span class="frame-edge-handle frame-edge-t" data-edge="top" title="Drag to adjust top"></span>
+                <span class="frame-edge-handle frame-edge-r" data-edge="right" title="Drag to adjust right"></span>
+                <span class="frame-edge-handle frame-edge-b" data-edge="bottom" title="Drag to adjust bottom"></span>
+                <span class="frame-edge-handle frame-edge-l" data-edge="left" title="Drag to adjust left"></span>
+                <span class="frame-corner-handle frame-corner-tl" data-corner="tl" title="Drag corner"></span>
+                <span class="frame-corner-handle frame-corner-tr" data-corner="tr" title="Drag corner"></span>
+                <span class="frame-corner-handle frame-corner-br" data-corner="br" title="Drag corner"></span>
+                <span class="frame-corner-handle frame-corner-bl" data-corner="bl" title="Drag corner"></span>
             </div>
         </div>
         @endif
@@ -91,10 +121,22 @@
 <style>
 .frame-editor-wrap { user-select: none; }
 .photo-frame-box, .name-frame-box { position: absolute; border: 2px dashed rgba(102, 126, 234, 0.9); background: rgba(102, 126, 234, 0.12); cursor: move; }
-.photo-frame-box { transform-origin: center center; }
-.frame-rotate-handle { position: absolute; top: -28px; left: 50%; transform: translateX(-50%); width: 24px; height: 24px; background: #667eea; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: grab; line-height: 1; }
+.photo-frame-box { transform-origin: center center; box-sizing: border-box; }
+.photo-frame-box.frame-shape-rounded { border-radius: 16px; }
+.photo-frame-box.frame-shape-circle { border-radius: 50%; }
+.photo-frame-box.frame-shape-ellipse { border-radius: 50%; }
+.frame-rotate-handle { position: absolute; top: -28px; left: 50%; transform: translateX(-50%); width: 24px; height: 24px; background: #667eea; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: grab; line-height: 1; z-index: 2; }
 .frame-rotate-handle:active { cursor: grabbing; }
-.frame-resize-handle { position: absolute; bottom: -6px; right: -6px; width: 16px; height: 16px; background: #667eea; border: 2px solid #fff; border-radius: 2px; cursor: nwse-resize; }
+.frame-edge-handle { position: absolute; background: #667eea; border: 2px solid #fff; z-index: 1; }
+.frame-edge-handle.frame-edge-t { left: 10%; right: 10%; top: -4px; height: 10px; cursor: n-resize; }
+.frame-edge-handle.frame-edge-r { right: -4px; top: 10%; bottom: 10%; width: 10px; cursor: e-resize; }
+.frame-edge-handle.frame-edge-b { left: 10%; right: 10%; bottom: -4px; height: 10px; cursor: s-resize; }
+.frame-edge-handle.frame-edge-l { left: -4px; top: 10%; bottom: 10%; width: 10px; cursor: w-resize; }
+.frame-corner-handle { position: absolute; width: 14px; height: 14px; background: #667eea; border: 2px solid #fff; border-radius: 2px; z-index: 1; }
+.frame-corner-handle.frame-corner-tl { left: -6px; top: -6px; cursor: nwse-resize; }
+.frame-corner-handle.frame-corner-tr { right: -6px; top: -6px; cursor: nesw-resize; }
+.frame-corner-handle.frame-corner-br { right: -6px; bottom: -6px; cursor: nwse-resize; }
+.frame-corner-handle.frame-corner-bl { left: -6px; bottom: -6px; cursor: nesw-resize; }
 .name-frame-box { cursor: move; min-width: 40px; min-height: 24px; }
 </style>
 <script>
@@ -103,67 +145,106 @@
     if (!wrap) return;
     var box = document.getElementById('photoFrameBox');
     var rotHandle = document.getElementById('photoRotateHandle');
-    var resHandle = document.getElementById('photoResizeHandle');
-    var inpX = document.getElementById('photo_x_pct');
-    var inpY = document.getElementById('photo_y_pct');
-    var inpW = document.getElementById('photo_width_pct');
-    var inpH = document.getElementById('photo_height_pct');
-    var inpRot = document.getElementById('photo_rotation');
+    var MIN = 5;
 
     function getVal(id) { return parseFloat(document.getElementById(id).value) || 0; }
     function setVal(id, v) { document.getElementById(id).value = String(v); }
 
+    function getEdges() {
+        return { left: getVal('photo_left_pct'), top: getVal('photo_top_pct'), right: getVal('photo_right_pct'), bottom: getVal('photo_bottom_pct') };
+    }
+    function setEdges(left, top, right, bottom) {
+        left = Math.max(0, Math.min(100, left));
+        top = Math.max(0, Math.min(100, top));
+        right = Math.max(0, Math.min(100, right));
+        bottom = Math.max(0, Math.min(100, bottom));
+        if (right - left < MIN) right = left + MIN;
+        if (bottom - top < MIN) bottom = top + MIN;
+        setVal('photo_left_pct', left); setVal('photo_top_pct', top); setVal('photo_right_pct', right); setVal('photo_bottom_pct', bottom);
+        setVal('photo_x_pct', (left + right) / 2); setVal('photo_y_pct', (top + bottom) / 2);
+        setVal('photo_width_pct', right - left); setVal('photo_height_pct', bottom - top);
+    }
+
     function applyPhotoBox() {
-        var x = getVal('photo_x_pct'), y = getVal('photo_y_pct'), w = getVal('photo_width_pct'), h = getVal('photo_height_pct'), r = getVal('photo_rotation');
-        box.style.left = x + '%'; box.style.top = y + '%'; box.style.width = w + '%'; box.style.height = h + '%';
-        box.style.transform = 'translate(-50%, -50%) rotate(' + r + 'deg)';
+        var e = getEdges(), r = getVal('photo_rotation');
+        box.style.left = e.left + '%'; box.style.top = e.top + '%';
+        box.style.width = (e.right - e.left) + '%'; box.style.height = (e.bottom - e.top) + '%';
+        box.style.transform = 'rotate(' + r + 'deg)';
+        var shape = (document.getElementById('photo_shape') || {}).value || 'rectangle';
+        box.className = 'photo-frame-box frame-shape-' + shape;
+    }
+    if (document.getElementById('photo_shape')) {
+        document.getElementById('photo_shape').addEventListener('change', applyPhotoBox);
     }
     applyPhotoBox();
 
-    var dragging = null, startX, startY, startV1, startV2;
+    var dragging = null, startX, startY, startEdges, startRot, startAngle;
     function pxToPctX(px) { return (px / wrap.offsetWidth) * 100; }
     function pxToPctY(px) { return (px / wrap.offsetHeight) * 100; }
 
     box.addEventListener('mousedown', function(e) {
-        if (e.target === rotHandle || e.target === resHandle) return;
+        if (e.target.closest('.frame-rotate-handle, .frame-edge-handle, .frame-corner-handle')) return;
         e.preventDefault();
         dragging = 'move';
         startX = e.clientX; startY = e.clientY;
-        startV1 = getVal('photo_x_pct'); startV2 = getVal('photo_y_pct');
+        startEdges = getEdges();
     });
     rotHandle.addEventListener('mousedown', function(e) {
         e.preventDefault(); e.stopPropagation();
         dragging = 'rotate';
         startX = e.clientX; startY = e.clientY;
-        startV1 = getVal('photo_rotation');
-        var rect = wrap.getBoundingClientRect();
-        startV2 = Math.atan2(startY - (rect.top + rect.height * getVal('photo_y_pct')/100), startX - (rect.left + rect.width * getVal('photo_x_pct')/100));
+        startRot = getVal('photo_rotation');
+        var rect = wrap.getBoundingClientRect(), cx = rect.left + rect.width * getVal('photo_x_pct')/100, cy = rect.top + rect.height * getVal('photo_y_pct')/100;
+        startAngle = Math.atan2(startY - cy, startX - cx);
     });
-    resHandle.addEventListener('mousedown', function(e) {
-        e.preventDefault(); e.stopPropagation();
-        dragging = 'resize';
-        startX = e.clientX; startY = e.clientY;
-        startV1 = getVal('photo_width_pct'); startV2 = getVal('photo_height_pct');
+    [].forEach.call(document.querySelectorAll('.frame-edge-handle'), function(el) {
+        el.addEventListener('mousedown', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            dragging = 'edge:' + el.getAttribute('data-edge');
+            startX = e.clientX; startY = e.clientY;
+            startEdges = getEdges();
+        });
+    });
+    [].forEach.call(document.querySelectorAll('.frame-corner-handle'), function(el) {
+        el.addEventListener('mousedown', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            dragging = 'corner:' + el.getAttribute('data-corner');
+            startX = e.clientX; startY = e.clientY;
+            startEdges = getEdges();
+        });
     });
 
     document.addEventListener('mousemove', function(e) {
         if (!dragging) return;
         if (dragging === 'nameMove') return;
-        var dx = e.clientX - startX, dy = e.clientY - startY;
+        var dx = pxToPctX(e.clientX - startX), dy = pxToPctY(e.clientY - startY);
+        var L = startEdges && startEdges.left, T = startEdges && startEdges.top, R = startEdges && startEdges.right, B = startEdges && startEdges.bottom;
         if (dragging === 'move') {
-            setVal('photo_x_pct', Math.max(0, Math.min(100, startV1 + pxToPctX(dx))));
-            setVal('photo_y_pct', Math.max(0, Math.min(100, startV2 + pxToPctY(dy))));
+            setEdges(L + dx, T + dy, R + dx, B + dy);
         } else if (dragging === 'rotate') {
-            var rect = wrap.getBoundingClientRect();
-            var cx = rect.left + rect.width * getVal('photo_x_pct')/100;
-            var cy = rect.top + rect.height * getVal('photo_y_pct')/100;
+            var rect = wrap.getBoundingClientRect(), cx = rect.left + rect.width * getVal('photo_x_pct')/100, cy = rect.top + rect.height * getVal('photo_y_pct')/100;
             var curAngle = Math.atan2(e.clientY - cy, e.clientX - cx);
-            var deg = startV1 + (curAngle - startV2) * 180 / Math.PI;
-            setVal('photo_rotation', deg);
-        } else if (dragging === 'resize') {
-            var dw = pxToPctX(dx), dh = pxToPctY(dy);
-            setVal('photo_width_pct', Math.max(10, Math.min(100, startV1 + dw)));
-            setVal('photo_height_pct', Math.max(10, Math.min(100, startV2 + dh)));
+            setVal('photo_rotation', startRot + (curAngle - startAngle) * 180 / Math.PI);
+        } else if (dragging === 'edge:top') {
+            var newTop = Math.max(0, Math.min(B - MIN, T + dy));
+            setEdges(L, newTop, R, B);
+        } else if (dragging === 'edge:bottom') {
+            var newBottom = Math.max(T + MIN, Math.min(100, B + dy));
+            setEdges(L, T, R, newBottom);
+        } else if (dragging === 'edge:left') {
+            var newLeft = Math.max(0, Math.min(R - MIN, L + dx));
+            setEdges(newLeft, T, R, B);
+        } else if (dragging === 'edge:right') {
+            var newRight = Math.max(L + MIN, Math.min(100, R + dx));
+            setEdges(L, T, newRight, B);
+        } else if (dragging === 'corner:tl') {
+            setEdges(Math.max(0, Math.min(R - MIN, L + dx)), Math.max(0, Math.min(B - MIN, T + dy)), R, B);
+        } else if (dragging === 'corner:tr') {
+            setEdges(L, Math.max(0, Math.min(B - MIN, T + dy)), Math.max(L + MIN, Math.min(100, R + dx)), B);
+        } else if (dragging === 'corner:br') {
+            setEdges(L, T, Math.max(L + MIN, Math.min(100, R + dx)), Math.max(T + MIN, Math.min(100, B + dy)));
+        } else if (dragging === 'corner:bl') {
+            setEdges(Math.max(0, Math.min(R - MIN, L + dx)), T, R, Math.max(T + MIN, Math.min(100, B + dy)));
         }
         applyPhotoBox();
     });
