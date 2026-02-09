@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Admin Dashboard') - Oil Management System</title>
+    <title>@yield('title', 'Dashboard') - Wishing Cards Admin</title>
     
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -773,9 +773,9 @@
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-logo">
-                <i class="fas fa-oil-can"></i>
+                <i class="fas fa-birthday-cake"></i>
             </div>
-            <h4 class="sidebar-title">Oil Management</h4>
+            <h4 class="sidebar-title">Wishing Cards</h4>
         </div>
         <ul class="sidebar-menu">
             <li>
@@ -785,27 +785,9 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.brands.index') }}" class="{{ request()->routeIs('admin.brands.*') ? 'active' : '' }}">
-                    <i class="fas fa-tags"></i>
-                    <span>Brands &amp; Inventory</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.customers.index') }}" class="{{ request()->routeIs('admin.customers.*') ? 'active' : '' }}">
-                    <i class="fas fa-users"></i>
-                    <span>Customers</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.sales.index') }}" class="{{ request()->routeIs('admin.sales.*') ? 'active' : '' }}">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span>Sales</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.reports.customer') }}" class="{{ request()->routeIs('admin.reports.*') ? 'active' : '' }}">
-                    <i class="fas fa-chart-line"></i>
-                    <span>Reports</span>
+                <a href="{{ route('admin.designs.index') }}" class="{{ request()->routeIs('admin.designs.*') ? 'active' : '' }}">
+                    <i class="fas fa-image"></i>
+                    <span>Designs</span>
                 </a>
             </li>
         </ul>
@@ -835,13 +817,6 @@
                         <i class="fas fa-chevron-down ms-2"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li>
-                            <a class="dropdown-item" href="{{ route('admin.profile.edit') }}">
-                                <i class="fas fa-user"></i>
-                                <span>Profile Settings</span>
-                            </a>
-                        </li>
-                        <li><hr class="dropdown-divider"></li>
                         <li>
                             <a class="dropdown-item text-danger" href="{{ route('admin.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="fas fa-sign-out-alt"></i>

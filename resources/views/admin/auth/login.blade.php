@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- PAGE TITLE HERE -->
-    <title>Admin Login - Oil Management System</title>
+    <title>Admin Login - Wishing Cards</title>
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -154,10 +154,10 @@
                     <div class="login-card">
                         <div class="login-header">
                             <div class="logo-container">
-                                <i class="fas fa-oil-can"></i>
+                                <i class="fas fa-birthday-cake"></i>
                             </div>
-                            <h2 class="mb-2 fw-bold">Welcome Back!</h2>
-                            <p class="mb-0 opacity-75">Sign in to your admin account</p>
+                            <h2 class="mb-2 fw-bold">Welcome Back</h2>
+                            <p class="mb-0 opacity-75">Sign in to manage card designs</p>
                         </div>
                         
                         <div class="login-body">

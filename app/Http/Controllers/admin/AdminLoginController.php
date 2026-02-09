@@ -31,6 +31,9 @@ class AdminLoginController extends Controller
                     return redirect()->back()->with('error', 'Invalid email or password');
                 }
             }
+            if (Auth::check()) {
+                return redirect()->route('admin.dashboard');
+            }
             return view('admin.auth.login');
         } catch (Exception $e) {
             Log::error(__CLASS__ . '::' . __LINE__ . ' Exception: ' . $e->getMessage());
