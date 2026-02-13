@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Artisan;
 
 // Public – no login
 Route::get('/', [CardController::class, 'home'])->name('cards.home');
+Route::get('/category/{category}', [CardController::class, 'category'])->name('cards.category');
 Route::get('/card/{design}', [CardController::class, 'create'])->name('cards.create');
 
 // Guest – login page

@@ -7,12 +7,34 @@ use App\Models\Design;
 class CardController extends Controller
 {
     /**
-     * Home: list active designs for user to choose.
+     * Home at /: show all active designs, sidebar with categories. No redirect.
      */
     public function home()
     {
-        $designs = Design::active()->orderBy('order')->orderBy('id')->get();
-        return view('cards.home', compact('designs'));
+        $categories = config('cards.categories', ['birthday-cards' => 'Birthday Cards']);
+        $designs = Design::active()->orderBy('category')->orderBy('order')->orderBy('id')->get();
+        return view('cards.home', [
+            'designs' => $designs,
+            'categories' => $categories,
+            'currentCategory' => null,
+        ]);
+    }
+
+    /**
+     * Category page: show active designs for this category (when user clicks a category).
+     */
+    public function category(string $category)
+    {
+        $categories = config('cards.categories', ['birthday-cards' => 'Birthday Cards']);
+        if (!isset($categories[$category])) {
+            abort(404, 'Category not found.');
+        }
+        $designs = Design::active()->inCategory($category)->orderBy('order')->orderBy('id')->get();
+        return view('cards.home', [
+            'designs' => $designs,
+            'categories' => $categories,
+            'currentCategory' => $category,
+        ]);
     }
 
     /**

@@ -8,12 +8,17 @@ use App\Models\Design;
 class DesignController extends Controller
 {
     /**
-     * List all designs with active toggle and preview.
+     * List all designs with active toggle and preview. Optional filter by category.
      */
-    public function index()
+    public function index(\Illuminate\Http\Request $request)
     {
-        $designs = Design::orderBy('order')->orderBy('id')->get();
-        return view('admin.designs.index', compact('designs'));
+        $categories = config('cards.categories', []);
+        $query = Design::orderBy('category')->orderBy('order')->orderBy('id');
+        if ($request->filled('category') && isset($categories[$request->category])) {
+            $query->where('category', $request->category);
+        }
+        $designs = $query->get();
+        return view('admin.designs.index', compact('designs', 'categories'));
     }
 
     /**

@@ -3,10 +3,21 @@
 @section('title', 'Designs')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
     <h5 class="mb-0">Card designs</h5>
+    @if(!empty($categories))
+    <form method="GET" class="d-flex align-items-center gap-2">
+        <label class="form-label mb-0 small text-muted">Category</label>
+        <select name="category" class="form-select form-select-sm" style="width: auto;" onchange="this.form.submit()">
+            <option value="">All</option>
+            @foreach($categories as $slug => $label)
+            <option value="{{ $slug }}" {{ request('category') === $slug ? 'selected' : '' }}>{{ $label }}</option>
+            @endforeach
+        </select>
+    </form>
+    @endif
 </div>
-<p class="text-muted mb-4">Designs are built in code (see <code>resources/views/cards/templates/</code>). Toggle active to show or hide on the frontend.</p>
+<p class="text-muted mb-4">Designs are in <code>resources/views/cards/templates/{category}/</code>. Toggle active to show or hide on the frontend.</p>
 <div class="card">
     <div class="card-body p-0">
         @if($designs->isEmpty())
@@ -20,6 +31,7 @@
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Category</th>
                             <th>Template</th>
                             <th>Status</th>
                             <th style="width: 180px;">Actions</th>
@@ -29,7 +41,8 @@
                         @foreach($designs as $d)
                         <tr>
                             <td>{{ $d->name }}</td>
-                            <td><code>{{ $d->template_key }}</code></td>
+                            <td>{{ $d->getCategoryLabel() }}</td>
+                            <td><code>{{ $d->category }}/{{ $d->template_key }}</code></td>
                             <td>
                                 <form action="{{ route('admin.designs.toggle-active', $d) }}" method="POST" class="d-inline">
                                     @csrf

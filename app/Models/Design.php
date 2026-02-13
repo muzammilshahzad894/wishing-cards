@@ -8,6 +8,7 @@ class Design extends Model
 {
     protected $fillable = [
         'name',
+        'category',
         'template_key',
         'is_active',
         'order',
@@ -24,6 +25,28 @@ class Design extends Model
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
+    }
+
+    public function scopeInCategory($query, string $category)
+    {
+        return $query->where('category', $category);
+    }
+
+    /**
+     * View path for template: cards.templates.{category}.{template_key}
+     */
+    public function getTemplateViewPath(): string
+    {
+        return 'cards.templates.' . $this->category . '.' . $this->template_key;
+    }
+
+    /**
+     * Display label for category (e.g. "Birthday Cards" from "birthday-cards").
+     */
+    public function getCategoryLabel(): string
+    {
+        $categories = config('cards.categories', []);
+        return $categories[$this->category] ?? ucwords(str_replace('-', ' ', $this->category));
     }
 
     /**

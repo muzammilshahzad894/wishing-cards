@@ -2,13 +2,26 @@
 
 return [
     /*
-    | Available card templates (folder: resources/views/cards/templates/).
-    | Add new template key => label when you add a new .blade.php file.
+    | Category = folder name under resources/views/cards/templates/.
+    | Display name on frontend: ucwords(str_replace('-', ' ', $slug)) e.g. "Birthday Cards"
+    */
+    'categories' => [
+        'birthday-cards' => 'Birthday Cards',
+        // 'wedding' => 'Wedding',
+        // 'baby-kids' => 'Baby & Kids',
+        // 'party' => 'Party',
+    ],
+
+    /*
+    | Templates per category (folder: resources/views/cards/templates/{category}/).
     */
     'templates' => [
-        'birthday-classic' => 'Birthday Classic',
-        // 'birthday-elegant' => 'Birthday Elegant',
-        // 'birthday-minimal' => 'Birthday Minimal',
+        'birthday-cards' => [
+            'birthday-classic' => 'Birthday Classic',
+        ],
+        // 'wedding' => [
+        //     'wedding-elegant' => 'Wedding Elegant',
+        // ],
     ],
 
     'template_defaults' => [

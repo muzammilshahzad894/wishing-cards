@@ -9,17 +9,22 @@ class DesignSeeder extends Seeder
 {
     public function run(): void
     {
-        $templates = config('cards.templates', []);
+        $templatesByCategory = config('cards.templates', []);
         $order = 0;
-        foreach ($templates as $key => $label) {
-            Design::firstOrCreate(
-                ['template_key' => $key],
-                [
-                    'name' => $label,
-                    'is_active' => true,
-                    'order' => $order++,
-                ]
-            );
+        foreach ($templatesByCategory as $category => $templates) {
+            foreach ($templates as $templateKey => $label) {
+                Design::firstOrCreate(
+                    [
+                        'category' => $category,
+                        'template_key' => $templateKey,
+                    ],
+                    [
+                        'name' => $label,
+                        'is_active' => true,
+                        'order' => $order++,
+                    ]
+                );
+            }
         }
     }
 }

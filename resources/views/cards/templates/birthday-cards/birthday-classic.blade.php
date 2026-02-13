@@ -4,6 +4,7 @@
     $cardName = $cardName ?? 'Your Name';
     $greetingText = $greetingText ?? 'Happy Birthday';
     $cardId = $cardId ?? 'birthdayCardOutput';
+    $showName = $showName ?? true;
 @endphp
 <div class="bday-card shadow-lg" id="{{ $cardId }}">
     <div class="bday-card-inner">
@@ -18,7 +19,7 @@
                 </div>
                 <img src="{{ $cardImage ?: '' }}" alt="" class="bday-photo-img {{ $cardImage ? '' : 'd-none' }}" id="bdayPhotoImg" crossorigin="anonymous">
             </div>
-            <p class="bday-name mb-0" id="bdayName">{{ $cardName }}</p>
+            <p class="bday-name mb-0 {{ ($showName ?? true) ? '' : 'd-none' }}" id="bdayName">{{ $cardName }}</p>
         </div>
     </div>
 </div>

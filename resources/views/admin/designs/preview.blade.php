@@ -9,7 +9,7 @@
     <style>body { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #f0ebe3; padding: 1rem; margin: 0; }</style>
 </head>
 <body>
-    @include('cards.templates.' . $design->template_key, [
+    @include($design->getTemplateViewPath(), [
         'cardImage' => $cardImage,
         'cardName' => $cardName,
         'greetingText' => $greetingText,
