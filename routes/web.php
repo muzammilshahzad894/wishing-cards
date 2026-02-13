@@ -26,7 +26,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/logout', [AdminLoginController::class, 'logout'])->name('logout');
 
-    Route::resource('designs', DesignController::class)->except(['show']);
+    Route::get('/designs', [DesignController::class, 'index'])->name('designs.index');
+    Route::get('/designs/{design}/preview', [DesignController::class, 'preview'])->name('designs.preview');
     Route::post('/designs/{design}/toggle-active', [DesignController::class, 'toggleActive'])->name('designs.toggle-active');
 });
 

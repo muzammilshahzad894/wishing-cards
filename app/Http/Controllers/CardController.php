@@ -7,16 +7,16 @@ use App\Models\Design;
 class CardController extends Controller
 {
     /**
-     * Home: show only active designs for users to choose.
+     * Home: list active designs for user to choose.
      */
     public function home()
     {
-        $designs = Design::active()->orderBy('created_at', 'desc')->get();
+        $designs = Design::active()->orderBy('order')->orderBy('id')->get();
         return view('cards.home', compact('designs'));
     }
 
     /**
-     * Create card: one design – upload photo, set name, save.
+     * Create card: selected design, user adds photo and name.
      */
     public function create(Design $design)
     {

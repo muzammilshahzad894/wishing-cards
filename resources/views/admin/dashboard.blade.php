@@ -15,7 +15,7 @@
         <div class="stat-card">
             <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
             <div class="stat-value">{{ $activeCount }}</div>
-            <div class="stat-label">Active (shown to users)</div>
+            <div class="stat-label">Active (on frontend)</div>
         </div>
     </div>
     <div class="col-12">
