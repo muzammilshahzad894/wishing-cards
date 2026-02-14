@@ -211,24 +211,26 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    padding: 0;
 }
 
+/* Scale card to fill tile: ~240px tile → 240/400 = 0.6, use 0.68 for better fill */
 .card-tile-preview .bday-card {
-    transform: scale(0.55);
+    transform: scale(0.68);
     transform-origin: center center;
     transition: transform 0.25s ease;
 }
 
 .card-tile:hover .card-tile-preview .bday-card {
-    transform: scale(0.58);
+    transform: scale(0.72);
 }
 
 .card-tile-footer {
-    padding: 1rem 1.25rem;
+    padding: 0.75rem 1rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0.75rem;
+    gap: 0.5rem;
     border-top: 1px solid var(--border);
 }
 
@@ -379,15 +381,15 @@
     }
 
     .card-tile-preview .bday-card {
-        transform: scale(0.4);
+        transform: scale(0.5);
     }
 
     .card-tile:hover .card-tile-preview .bday-card {
-        transform: scale(0.42);
+        transform: scale(0.54);
     }
 
     .card-tile-footer {
-        padding: 0.75rem 1rem;
+        padding: 0.5rem 0.75rem;
         flex-wrap: wrap;
     }
 
@@ -403,10 +405,10 @@
     }
 
     .card-tile-preview .bday-card {
-        transform: scale(0.6);
+        transform: scale(0.75);
     }
 
     .card-tile:hover .card-tile-preview .bday-card {
-        transform: scale(0.63);
+        transform: scale(0.78);
     }
 }

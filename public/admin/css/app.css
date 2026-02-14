@@ -24,19 +24,23 @@ body {
     overflow-x: hidden;
 }
 
-/* Sidebar */
+/* Sidebar – fixed to left, no shift on zoom */
 .sidebar {
     position: fixed;
     top: 0;
     left: 0;
     width: var(--sidebar-width);
     height: 100vh;
+    min-height: 100vh;
     background: linear-gradient(180deg, #1a202c 0%, #2d3748 100%);
     box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease;
     overflow-y: auto;
     overflow-x: hidden;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .sidebar::-webkit-scrollbar {
@@ -629,11 +633,11 @@ body.modal-open {
 /* Mobile */
 @media (max-width: 992px) {
     .sidebar {
-        transform: translateX(-100%);
+        transform: translateZ(0) translateX(-100%);
     }
 
     .sidebar.show {
-        transform: translateX(0);
+        transform: translateZ(0) translateX(0);
     }
 
     .main-wrapper {

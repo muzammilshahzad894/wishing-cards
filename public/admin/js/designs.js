@@ -4,25 +4,31 @@
 (function () {
     'use strict';
 
-    var modal = document.getElementById('previewModal');
-    if (!modal) return;
+    function init() {
+        var modal = document.getElementById('previewModal');
+        if (!modal) return;
 
-    modal.addEventListener('show.bs.modal', function (e) {
-        var btn = e.relatedTarget;
-        var iframe = document.getElementById('previewIframe');
-        if (btn && btn.dataset.previewUrl && iframe) {
-            var titleEl = document.getElementById('previewModalLabel');
-            if (titleEl) {
-                titleEl.textContent = 'Preview: ' + (btn.dataset.designName || '');
+        modal.addEventListener('show.bs.modal', function (e) {
+            var btn = e.relatedTarget;
+            var iframe = document.getElementById('previewIframe');
+            if (btn && iframe) {
+                var url = btn.getAttribute('data-preview-url');
+                var name = btn.getAttribute('data-design-name') || '';
+                var titleEl = document.getElementById('previewModalLabel');
+                if (titleEl) titleEl.textContent = 'Preview: ' + name;
+                if (url) iframe.src = url;
             }
-            iframe.src = btn.dataset.previewUrl;
-        }
-    });
+        });
 
-    modal.addEventListener('hidden.bs.modal', function () {
-        var iframe = document.getElementById('previewIframe');
-        if (iframe) {
-            iframe.src = 'about:blank';
-        }
-    });
+        modal.addEventListener('hidden.bs.modal', function () {
+            var iframe = document.getElementById('previewIframe');
+            if (iframe) iframe.src = 'about:blank';
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
 })();
