@@ -25,7 +25,7 @@
                         'cardImage' => null,
                         'cardName' => $defaults['namePlaceholder'],
                         'greetingText' => $defaults['greetingText'],
-                        'cardId' => 'birthdayCardOutput',
+                        'cardId' => 'card-canvas-output',
                         'showName' => true,
                     ])
                 </div>

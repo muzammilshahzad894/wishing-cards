@@ -39,13 +39,15 @@
         <div class="bclassic-content">
             <p class="bclassic-greeting">{{ $greetingText }}</p>
             <div class="bclassic-photo-frame">
-                <div class="bclassic-photo-placeholder {{ $cardImage ? 'd-none' : '' }}" id="bdayPhotoPlaceholder">
-                    <i class="fas fa-camera"></i>
-                    <span>Add your photo</span>
+                <div class="bclassic-photo-zoom-wrap" id="card-photo-zoom-wrap">
+                    <div class="bclassic-photo-placeholder {{ $cardImage ? 'd-none' : '' }}" data-card-photo-placeholder id="bdayPhotoPlaceholder">
+                        <i class="fas fa-camera"></i>
+                        <span>Add your photo</span>
+                    </div>
+                    <img src="{{ $cardImage ?: '' }}" alt="" class="bclassic-photo-img {{ $cardImage ? '' : 'd-none' }}" id="card-photo-preview" crossorigin="anonymous">
                 </div>
-                <img src="{{ $cardImage ?: '' }}" alt="" class="bclassic-photo-img {{ $cardImage ? '' : 'd-none' }}" id="bdayPhotoImg" crossorigin="anonymous">
             </div>
-            <p class="bclassic-name {{ ($showName ?? true) ? '' : 'd-none' }}" id="bdayName">{{ $cardName }}</p>
+            <p class="bclassic-name {{ ($showName ?? true) ? '' : 'd-none' }}" id="card-name-display">{{ $cardName }}</p>
         </div>
     </div>
 </div>

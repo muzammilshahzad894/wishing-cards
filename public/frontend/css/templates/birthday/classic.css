@@ -242,7 +242,21 @@
     margin-bottom: 1rem;
 }
 
+.bclassic-photo-zoom-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 50%;
+    cursor: grab;
+}
+.bclassic-photo-zoom-wrap:active {
+    cursor: grabbing;
+}
+
 .bclassic-photo-placeholder {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     display: flex;
@@ -262,9 +276,12 @@
 }
 
 .bclassic-photo-img {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center center;
 }
 
 /* Name – signature / handwritten style (Great Vibes) */

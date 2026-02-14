@@ -1,4 +1,9 @@
-/* Birthday Modern – placeholder styles (replace with full design when ready) */
+/**
+ * Birthday Modern – dark elegant, Canva/Etsy-style
+ * Deep green/charcoal, circular photo, floral overlay, script + serif typography
+ */
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,500;0,600;0,700&display=swap');
+
 .card-birthday-modern {
     width: 400px;
     height: 520px;
@@ -6,11 +11,164 @@
     position: relative;
     border-radius: 20px;
     overflow: hidden;
-    background: var(--bg-subtle, #f8f4ef);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
-.card-tile .card-birthday-modern { transform-origin: center center; }
-.bmodern-inner { padding: 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; }
-.bmodern-greeting { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #1f1d1b; margin-bottom: 1rem; }
-.bmodern-photo-frame { width: 160px; height: 160px; border-radius: 50%; background: #fff; border: 4px solid rgba(0,0,0,0.06); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
-.bmodern-photo-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-.bmodern-name { font-family: 'DM Sans', sans-serif; font-size: 1.1rem; color: #1f1d1b; margin: 0; }
+
+.card-tile .card-birthday-modern {
+    transform-origin: center center;
+}
+
+.bmodern-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Dark elegant background */
+.bmodern-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #1a2f28 0%, #0f1c18 50%, #0a1411 100%);
+}
+
+.bmodern-shine {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 40% at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 55%);
+    pointer-events: none;
+}
+
+/* Sparkle / confetti dots around photo area */
+.bmodern-sparkles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.bmodern-sparkle-dot {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.bmodern-dot-1 { top: 14%; left: 18%; width: 5px; height: 5px; }
+.bmodern-dot-2 { top: 16%; right: 20%; width: 4px; height: 4px; opacity: 0.8; }
+.bmodern-dot-3 { top: 22%; left: 12%; width: 6px; height: 6px; opacity: 0.4; }
+.bmodern-dot-4 { top: 20%; right: 14%; width: 4px; height: 4px; }
+.bmodern-dot-5 { top: 28%; left: 22%; width: 5px; height: 5px; opacity: 0.6; }
+.bmodern-dot-6 { top: 26%; right: 18%; width: 4px; height: 4px; }
+
+/* Content */
+.bmodern-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.25rem 1.5rem 1.5rem;
+    text-align: center;
+}
+
+/* Photo at top center – large circle */
+.bmodern-photo-wrap {
+    flex-shrink: 0;
+    margin-bottom: 0.75rem;
+}
+
+.bmodern-photo-frame {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    background: linear-gradient(145deg, #2a3f38 0%, #1a2a24 100%);
+}
+
+.bmodern-photo-zoom-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 50%;
+    cursor: grab;
+}
+.bmodern-photo-zoom-wrap:active {
+    cursor: grabbing;
+}
+
+.bmodern-photo-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 500;
+}
+
+.bmodern-photo-placeholder i {
+    font-size: 2rem;
+    margin-bottom: 0.35rem;
+}
+
+.bmodern-photo-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+}
+
+/* Floral bouquet at bottom of circle – watercolor-style SVG background */
+.bmodern-floral {
+    position: absolute;
+    left: 50%;
+    bottom: -2px;
+    transform: translateX(-50%);
+    width: 120%;
+    height: 45px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 40' fill='none'%3E%3Cg opacity='0.85'%3E%3Cellipse cx='40' cy='28' rx='12' ry='10' fill='%23d4a574'/%3E%3Cellipse cx='70' cy='25' rx='14' ry='11' fill='%23c9956b'/%3E%3Cellipse cx='100' cy='28' rx='13' ry='10' fill='%23d4a574'/%3E%3Cellipse cx='130' cy='26' rx='12' ry='11' fill='%23b8885e'/%3E%3Cellipse cx='160' cy='28' rx='11' ry='10' fill='%23d4a574'/%3E%3Ccircle cx='55' cy='22' r='6' fill='%23e8c9a0'/%3E%3Ccircle cx='85' cy='20' r='7' fill='%23f0d4b0'/%3E%3Ccircle cx='115' cy='23' r='6' fill='%23e8c9a0'/%3E%3Ccircle cx='145' cy='21' r='5' fill='%23f0d4b0'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    pointer-events: none;
+}
+
+/* Script text – "Fifty" / greeting */
+.bmodern-script {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.95);
+    margin: 0 0 0.2rem 0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    line-height: 1.1;
+}
+
+/* Uppercase serif – greeting line */
+.bmodern-greeting {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.35em;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 0.5rem 0;
+}
+
+/* Name – uppercase serif */
+.bmodern-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+}

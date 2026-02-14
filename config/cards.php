@@ -18,6 +18,7 @@ return [
     'templates' => [
         'birthday-cards' => [
             'birthday-classic' => 'Birthday Classic',
+            'birthday-modern' => 'Birthday Modern',
         ],
         // 'wedding' => [
         //     'wedding-elegant' => 'Wedding Elegant',
@@ -27,6 +28,10 @@ return [
     'template_defaults' => [
         'birthday-classic' => [
             'greeting' => 'Happy Birthday',
+            'name_placeholder' => 'Your Name',
+        ],
+        'birthday-modern' => [
+            'greeting' => 'Fifty',
             'name_placeholder' => 'Your Name',
         ],
     ],

@@ -28,6 +28,7 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::post('/logout', [AdminLoginController::class, 'logout'])->name('logout');
 
     Route::get('/designs', [DesignController::class, 'index'])->name('designs.index');
+    Route::post('/designs/sync', [DesignController::class, 'sync'])->name('designs.sync');
     Route::get('/designs/{design}/preview', [DesignController::class, 'preview'])->name('designs.preview');
     Route::post('/designs/{design}/toggle-active', [DesignController::class, 'toggleActive'])->name('designs.toggle-active');
 });

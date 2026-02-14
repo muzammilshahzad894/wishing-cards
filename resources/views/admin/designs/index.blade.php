@@ -5,7 +5,14 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
     <h5 class="mb-0">Card designs</h5>
-    @if(!empty($categories))
+    <div class="d-flex align-items-center gap-2 flex-wrap">
+        <form action="{{ route('admin.designs.sync') }}" method="POST" class="d-inline">
+            @csrf
+            <button type="submit" class="btn btn-primary btn-sm">
+                <i class="fas fa-sync-alt me-1"></i> Sync All Templates
+            </button>
+        </form>
+        @if(!empty($categories))
     <form method="GET" class="d-flex align-items-center gap-2">
         <label class="form-label mb-0 small text-muted">Category</label>
         <select name="category" class="form-select form-select-sm" style="width: auto;" onchange="this.form.submit()">
@@ -16,7 +23,20 @@
         </select>
     </form>
     @endif
+    </div>
 </div>
+@if(session('success'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ session('success') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+@if(session('error'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ session('error') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
 <p class="text-muted mb-4">Designs are in <code>resources/views/cards/templates/{category}/</code>. Toggle active to show or hide on the frontend.</p>
 <div class="card">
     <div class="card-body p-0">
