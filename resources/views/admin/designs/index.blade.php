@@ -84,18 +84,5 @@
 @endsection
 
 @section('scripts')
-<script>
-document.getElementById('previewModal').addEventListener('show.bs.modal', function(e) {
-    var btn = e.relatedTarget;
-    var iframe = document.getElementById('previewIframe');
-    if (btn && btn.dataset.previewUrl && iframe) {
-        document.getElementById('previewModalLabel').textContent = 'Preview: ' + (btn.dataset.designName || '');
-        iframe.src = btn.dataset.previewUrl;
-    }
-});
-document.getElementById('previewModal').addEventListener('hidden.bs.modal', function() {
-    var iframe = document.getElementById('previewIframe');
-    if (iframe) iframe.src = 'about:blank';
-});
-</script>
+<script src="{{ asset('admin/js/designs.js') }}"></script>
 @endsection
