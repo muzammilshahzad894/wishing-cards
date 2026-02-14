@@ -1,0 +1,16 @@
+/* Birthday Modern – placeholder styles (replace with full design when ready) */
+.card-birthday-modern {
+    width: 400px;
+    height: 520px;
+    margin: 0 auto;
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--bg-subtle, #f8f4ef);
+}
+.card-tile .card-birthday-modern { transform-origin: center center; }
+.bmodern-inner { padding: 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; }
+.bmodern-greeting { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #1f1d1b; margin-bottom: 1rem; }
+.bmodern-photo-frame { width: 160px; height: 160px; border-radius: 50%; background: #fff; border: 4px solid rgba(0,0,0,0.06); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+.bmodern-photo-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.bmodern-name { font-family: 'DM Sans', sans-serif; font-size: 1.1rem; color: #1f1d1b; margin: 0; }

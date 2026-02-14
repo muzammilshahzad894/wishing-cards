@@ -91,6 +91,11 @@
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('frontend/css/cards.css') }}">
+@if(!$designs->isEmpty())
+@foreach($designs->map(fn($d) => $d->getTemplateCssUrl())->unique() as $templateCssUrl)
+<link rel="stylesheet" href="{{ $templateCssUrl }}">
+@endforeach
+@endif
 @endpush
 
 @push('scripts')

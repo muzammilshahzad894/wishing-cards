@@ -33,11 +33,39 @@ class Design extends Model
     }
 
     /**
-     * View path for template: cards.templates.{category}.{template_key}
+     * Category folder name (e.g. "birthday-cards" → "birthday").
+     */
+    public function getCategoryFolder(): string
+    {
+        return explode('-', $this->category)[0] ?? $this->category;
+    }
+
+    /**
+     * Template folder name (e.g. "birthday-classic" with category "birthday-cards" → "classic").
+     */
+    public function getTemplateFolder(): string
+    {
+        $prefix = $this->getCategoryFolder() . '-';
+        return str_starts_with($this->template_key, $prefix)
+            ? substr($this->template_key, strlen($prefix))
+            : $this->template_key;
+    }
+
+    /**
+     * View path: cards.templates.{category}.{template}.template
+     * e.g. cards.templates.birthday.classic.template
      */
     public function getTemplateViewPath(): string
     {
-        return 'cards.templates.' . $this->category . '.' . $this->template_key;
+        return 'cards.templates.' . $this->getCategoryFolder() . '.' . $this->getTemplateFolder() . '.template';
+    }
+
+    /**
+     * URL to this template's CSS: frontend/css/templates/{category}/{template}.css
+     */
+    public function getTemplateCssUrl(): string
+    {
+        return asset('frontend/css/templates/' . $this->getCategoryFolder() . '/' . $this->getTemplateFolder() . '.css');
     }
 
     /**

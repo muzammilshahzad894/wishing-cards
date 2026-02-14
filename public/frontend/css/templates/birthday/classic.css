@@ -1,0 +1,279 @@
+/**
+ * Birthday Classic – premium greeting card
+ * Canva/Etsy-quality: pastel gradient, confetti, balloons, sparkles, corners, glow
+ * Typography: Playfair Display (heading), DM Sans (body), Great Vibes (signature name)
+ */
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+.card-birthday-classic {
+    width: 400px;
+    height: 520px;
+    margin: 0 auto;
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.card-tile .card-birthday-classic {
+    transform-origin: center center;
+}
+
+.bclassic-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Soft pastel gradient background */
+.bclassic-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg,
+        #fff8f6 0%,
+        #ffefe9 18%,
+        #ffe8e0 35%,
+        #ffddd2 52%,
+        #ffd4c8 68%,
+        #fecabd 82%,
+        #fdc2b2 100%);
+}
+
+/* Radial shine overlay */
+.bclassic-shine {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 100% 70% at 50% -10%, rgba(255, 255, 255, 0.65) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* Glow highlights for depth */
+.bclassic-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+.bclassic-glow-tl {
+    width: 140px;
+    height: 140px;
+    top: -40px;
+    left: -40px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, transparent 70%);
+}
+
+.bclassic-glow-br {
+    width: 160px;
+    height: 160px;
+    bottom: -50px;
+    right: -50px;
+    background: radial-gradient(circle, rgba(255, 200, 180, 0.5) 0%, transparent 70%);
+}
+
+/* Elegant corner shapes */
+.bclassic-corners {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.bclassic-corner {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    opacity: 0.7;
+}
+
+.bclassic-corner-tl { top: 12px;  left: 12px;  border-right: none; border-bottom: none; border-radius: 12px 0 0 0; }
+.bclassic-corner-tr { top: 12px;  right: 12px; border-left: none;  border-bottom: none; border-radius: 0 12px 0 0; }
+.bclassic-corner-bl { bottom: 12px; left: 12px;  border-right: none; border-top: none;   border-radius: 0 0 0 12px; }
+.bclassic-corner-br { bottom: 12px; right: 12px; border-left: none;  border-top: none;   border-radius: 0 0 12px 0; }
+
+/* Confetti dots */
+.bclassic-confetti {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.bclassic-confetti-dot {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.55;
+}
+
+.bclassic-dot-1  { top: 6%;  left: 10%;  width: 8px;  height: 8px;  background: #c73659; }
+.bclassic-dot-2  { top: 12%; right: 8%;  width: 6px;  height: 6px;  background: #f4a261; }
+.bclassic-dot-3  { top: 18%; left: 6%;   width: 10px; height: 10px; background: #e8a4b8; opacity: 0.45; }
+.bclassic-dot-4  { top: 8%;  right: 18%; width: 7px;  height: 7px;  background: #fff; opacity: 0.6; }
+.bclassic-dot-5  { bottom: 30%; left: 5%;  width: 9px;  height: 9px;  background: #c73659; opacity: 0.4; }
+.bclassic-dot-6  { bottom: 20%; right: 6%;  width: 8px;  height: 8px;  background: #f4a261; }
+.bclassic-dot-7  { bottom: 14%; left: 16%;  width: 6px;  height: 6px;  background: #fff; opacity: 0.5; }
+.bclassic-dot-8  { top: 32%; right: 12%; width: 7px;  height: 7px;  background: #e8a4b8; opacity: 0.5; }
+.bclassic-dot-9  { bottom: 38%; right: 8%;  width: 6px;  height: 6px;  background: #c73659; opacity: 0.35; }
+.bclassic-dot-10 { top: 24%; left: 14%;  width: 8px;  height: 8px;  background: #fdd0a8; opacity: 0.5; }
+
+/* Balloon illustrations */
+.bclassic-balloons {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.bclassic-balloon {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.14;
+}
+
+.bclassic-balloon::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 10px solid currentColor;
+    opacity: 0.7;
+}
+
+.bclassic-balloon-1 {
+    width: 52px;
+    height: 64px;
+    top: 5%;
+    right: 9%;
+    background: linear-gradient(145deg, #c73659 0%, #e8a4b8 100%);
+    color: #c73659;
+    transform: rotate(-15deg);
+}
+
+.bclassic-balloon-2 {
+    width: 40px;
+    height: 50px;
+    top: 10%;
+    left: 7%;
+    background: linear-gradient(145deg, #f4a261 0%, #fdd0a8 100%);
+    color: #f4a261;
+    transform: rotate(10deg);
+}
+
+.bclassic-balloon-3 {
+    width: 36px;
+    height: 44px;
+    bottom: 12%;
+    left: 10%;
+    background: linear-gradient(145deg, #c73659 0%, #e8a4b8 100%);
+    color: #c73659;
+    transform: rotate(-8deg);
+}
+
+.bclassic-balloon-4 {
+    width: 32px;
+    height: 40px;
+    bottom: 8%;
+    right: 14%;
+    background: linear-gradient(145deg, #f4a261 0%, #fdd0a8 100%);
+    color: #f4a261;
+    transform: rotate(5deg);
+}
+
+/* Sparkle overlays */
+.bclassic-sparkles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.bclassic-sparkle {
+    position: absolute;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.bclassic-sparkle-1 { top: 16%; left: 12%; }
+.bclassic-sparkle-2 { top: 26%; right: 10%; transform: rotate(15deg); font-size: 0.65rem; }
+.bclassic-sparkle-3 { bottom: 24%; right: 14%; font-size: 0.7rem; }
+.bclassic-sparkle-4 { bottom: 18%; left: 8%; font-size: 0.6rem; opacity: 0.8; }
+.bclassic-sparkle-5 { top: 38%; left: 6%; font-size: 0.55rem; }
+
+/* Content layer */
+.bclassic-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 1.5rem;
+    text-align: center;
+}
+
+/* Greeting – Playfair Display, elegant and centered */
+.bclassic-greeting {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: #2d1b0e;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+    margin: 0 0 1.15rem 0;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.6);
+}
+
+/* Premium photo frame: rounded, soft shadow, elegant border */
+.bclassic-photo-frame {
+    width: 176px;
+    height: 176px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 6px solid rgba(255, 255, 255, 0.98);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12),
+                0 4px 12px rgba(0, 0, 0, 0.06),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.9);
+    background: linear-gradient(150deg, #fffaf8 0%, #ffece6 100%);
+    margin-bottom: 1rem;
+}
+
+.bclassic-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #c73659;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 500;
+}
+
+.bclassic-photo-placeholder i {
+    font-size: 2rem;
+    margin-bottom: 0.35rem;
+    opacity: 0.9;
+}
+
+.bclassic-photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Name – signature / handwritten style (Great Vibes) */
+.bclassic-name {
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.9rem;
+    font-weight: 400;
+    color: #2d1b0e;
+    letter-spacing: 0.02em;
+    margin: 0;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+}

@@ -25,6 +25,7 @@
                         'cardImage' => null,
                         'cardName' => $defaults['namePlaceholder'],
                         'greetingText' => $defaults['greetingText'],
+                        'cardId' => 'birthdayCardOutput',
                         'showName' => true,
                     ])
                 </div>
@@ -64,6 +65,7 @@
 @push('styles')
 <link rel="stylesheet" href="{{ asset('frontend/css/cards.css') }}">
 <link rel="stylesheet" href="{{ asset('frontend/css/cards-create.css') }}">
+<link rel="stylesheet" href="{{ $design->getTemplateCssUrl() }}">
 @endpush
 
 @push('scripts')
