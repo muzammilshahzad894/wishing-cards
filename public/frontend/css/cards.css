@@ -1,62 +1,139 @@
 /**
  * Cards listing & home page – Wishing Cards
+ * Modern, premium template marketplace styling (Canva/Etsy-inspired)
  */
 
-/* Hero */
+/* ========== Hero (landing-style) ========== */
 .cards-hero {
-    background: linear-gradient(135deg, rgba(199, 54, 89, 0.06) 0%, rgba(244, 162, 97, 0.04) 100%);
+    position: relative;
+    padding: 3.5rem 1.5rem 4rem;
     border-bottom: 1px solid var(--border);
-    padding: 2rem 1.5rem;
+    overflow: hidden;
+}
+
+.cards-hero-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(145deg, rgba(199, 54, 89, 0.06) 0%, rgba(244, 162, 97, 0.05) 40%, rgba(255, 255, 255, 0) 70%);
+    pointer-events: none;
 }
 
 .cards-hero-inner {
-    max-width: 1400px;
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
     margin: 0 auto;
+    text-align: center;
     padding: 0 1rem;
 }
 
 .cards-hero-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(1.5rem, 4vw, 2rem);
-    font-weight: 600;
+    font-size: clamp(2rem, 5.5vw, 3rem);
+    font-weight: 700;
     color: var(--text);
-    letter-spacing: -0.02em;
-    margin: 0 0 0.35em 0;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin: 0 0 0.5rem 0;
 }
 
 .cards-hero-subtitle {
-    font-size: 0.9375rem;
+    font-size: clamp(0.9375rem, 1.8vw, 1.125rem);
     color: var(--text-muted);
-    margin: 0;
-    max-width: 420px;
-    line-height: 1.5;
+    margin: 0 0 1.75rem 0;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
 }
 
-/* Layout */
+.cards-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-hero-primary {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 1rem;
+    background: var(--primary);
+    color: #fff !important;
+    border: none;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.btn-hero-primary:hover {
+    background: var(--primary-dark);
+    color: #fff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(199, 54, 89, 0.35);
+}
+
+.btn-hero-secondary {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 1rem;
+    background: var(--card-bg);
+    color: var(--text) !important;
+    border: 1px solid var(--border);
+    text-decoration: none;
+    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.btn-hero-secondary:hover {
+    border-color: var(--primary-light);
+    background: var(--bg-subtle);
+    color: var(--primary) !important;
+}
+
+/* ========== Layout ========== */
 .cards-page {
     display: flex;
     flex-direction: row;
-    min-height: calc(100vh - 56px - 120px);
+    min-height: calc(100vh - 56px - 180px);
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
 }
 
+/* ========== Sidebar – card-style, pill active ========== */
 .cards-sidebar {
-    width: 260px;
+    width: 280px;
     flex-shrink: 0;
-    background: var(--card-bg);
-    border-right: 1px solid var(--border);
     padding: 1.5rem 0;
     position: sticky;
-    top: 57px;
+    top: 65px;
     align-self: flex-start;
-    max-height: calc(100vh - 57px);
+    max-height: calc(100vh - 80px);
     overflow-y: auto;
 }
 
+.sidebar-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    padding: 1rem 0;
+    transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.sidebar-card:hover {
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
 .sidebar-header {
-    padding: 0 1.25rem 1rem;
+    padding: 0 1.25rem 0.75rem;
 }
 
 .sidebar-label {
@@ -70,31 +147,36 @@
 .sidebar-nav {
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+    gap: 0.25rem;
     padding: 0 0.75rem;
 }
 
 .sidebar-link {
     display: flex;
     align-items: center;
-    gap: 0.65rem;
-    padding: 0.65rem 1rem;
-    font-size: 0.9rem;
+    gap: 0.75rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.9375rem;
     color: var(--text);
     text-decoration: none;
-    border-radius: 10px;
-    transition: background 0.2s ease, color 0.2s ease;
+    border-radius: 999px;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 
 .sidebar-link:hover {
     background: var(--bg-subtle);
     color: var(--primary);
+    transform: translateX(2px);
 }
 
 .sidebar-link.active {
-    background: linear-gradient(135deg, rgba(199, 54, 89, 0.12) 0%, rgba(199, 54, 89, 0.06) 100%);
-    color: var(--primary);
+    background: var(--primary);
+    color: #fff !important;
     font-weight: 600;
+}
+
+.sidebar-link.active .sidebar-icon {
+    opacity: 1;
 }
 
 .sidebar-icon {
@@ -104,12 +186,13 @@
     text-align: center;
 }
 
-/* Main content */
+/* ========== Main content ========== */
 .cards-main {
     flex: 1;
     min-width: 0;
     padding: 2rem 2rem 2.5rem;
     overflow: auto;
+    scroll-margin-top: 80px;
 }
 
 .cards-main-header {
@@ -117,11 +200,11 @@
 }
 
 .cards-section-title {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     font-weight: 700;
     color: var(--text);
     margin: 0 0 0.25rem 0;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
 }
 
 .cards-section-count {
@@ -130,7 +213,7 @@
     margin: 0;
 }
 
-/* Empty state */
+/* ========== Empty state ========== */
 .cards-empty {
     text-align: center;
     padding: 4rem 2rem;
@@ -171,10 +254,10 @@
     line-height: 1.5;
 }
 
-/* Card grid */
+/* ========== Template grid – premium marketplace ========== */
 .cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 1.5rem;
 }
 
@@ -187,13 +270,13 @@
     overflow: hidden;
     border: 1px solid var(--border);
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.2s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.25s ease;
 }
 
 .card-tile:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
-    border-color: rgba(199, 54, 89, 0.2);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.12);
+    border-color: rgba(199, 54, 89, 0.25);
 }
 
 .card-tile:hover .card-tile-title {
@@ -202,9 +285,15 @@
 
 .card-tile:hover .card-tile-cta {
     opacity: 1;
+    transform: translateX(2px);
+}
+
+.card-tile:hover .card-tile-overlay {
+    opacity: 1;
 }
 
 .card-tile-preview {
+    position: relative;
     aspect-ratio: 400/520;
     background: linear-gradient(180deg, var(--bg-subtle) 0%, #f5f0ea 100%);
     display: flex;
@@ -214,11 +303,37 @@
     padding: 0;
 }
 
-/* Scale card to fill tile: ~240px tile → 240/400 = 0.6, use 0.68 for better fill */
+.card-tile-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(199, 54, 89, 0.2);
+    backdrop-filter: blur(3px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    z-index: 2;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.card-tile-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0.5rem;
+    border: 2px solid rgba(255, 255, 255, 0.85);
+    border-radius: 12px;
+    pointer-events: none;
+}
+
 .card-tile-preview .bday-card {
     transform: scale(0.68);
     transform-origin: center center;
-    transition: transform 0.25s ease;
+    transition: transform 0.3s ease;
+    z-index: 1;
 }
 
 .card-tile:hover .card-tile-preview .bday-card {
@@ -226,12 +341,14 @@
 }
 
 .card-tile-footer {
-    padding: 0.75rem 1rem;
+    padding: 0.875rem 1.125rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
     border-top: 1px solid var(--border);
+    background: var(--card-bg);
+    transition: background 0.2s ease;
 }
 
 .card-tile-title {
@@ -248,21 +365,81 @@
     font-size: 0.8125rem;
     font-weight: 600;
     color: var(--primary);
-    opacity: 0.85;
-    transition: opacity 0.2s ease;
+    opacity: 0.9;
+    transition: opacity 0.2s ease, transform 0.2s ease;
     white-space: nowrap;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 0.35rem;
 }
 
-/* Mobile dropdown */
+/* ========== How it Works ========== */
+.cards-how-it-works {
+    padding: 4rem 1.5rem;
+    background: var(--bg-subtle);
+    border-top: 1px solid var(--border);
+}
+
+.how-it-works-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 1.75rem);
+    font-weight: 600;
+    color: var(--text);
+    text-align: center;
+    margin: 0 0 2rem 0;
+    letter-spacing: -0.02em;
+}
+
+.how-step {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    height: 100%;
+    transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.how-step:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.how-step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.how-step-title {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0 0 0.35rem 0;
+}
+
+.how-step-text {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* ========== Mobile dropdown ========== */
 .cards-dropdown-menu .dropdown-item.active {
     background: rgba(199, 54, 89, 0.12);
     color: var(--primary);
 }
 
-/* Birthday card template (used in grid & create) */
+/* ========== Birthday card template (used in grid & create) ========== */
 .bday-card {
     width: 400px;
     height: 520px;
@@ -353,10 +530,24 @@
     font-family: Georgia, serif;
 }
 
-/* Responsive */
+/* ========== Responsive ========== */
 @media (max-width: 991px) {
     .cards-hero {
-        padding: 1.5rem 1rem;
+        padding: 2.5rem 1rem 3rem;
+    }
+
+    .cards-hero-subtitle {
+        margin-bottom: 1.5rem;
+    }
+
+    .cards-hero-actions {
+        gap: 0.5rem;
+    }
+
+    .btn-hero-primary,
+    .btn-hero-secondary {
+        padding: 0.65rem 1.25rem;
+        font-size: 0.9375rem;
     }
 
     .cards-page {
@@ -368,7 +559,7 @@
     }
 
     .cards-main {
-        padding: 1.25rem 1rem 2rem;
+        padding: 1.5rem 1rem 2rem;
     }
 
     .cards-main-header {
@@ -376,7 +567,7 @@
     }
 
     .cards-grid {
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
     }
 
@@ -389,12 +580,24 @@
     }
 
     .card-tile-footer {
-        padding: 0.5rem 0.75rem;
+        padding: 0.6rem 0.75rem;
         flex-wrap: wrap;
+    }
+
+    .card-tile-title {
+        font-size: 0.8125rem;
     }
 
     .card-tile-cta {
         font-size: 0.75rem;
+    }
+
+    .cards-how-it-works {
+        padding: 3rem 1rem;
+    }
+
+    .how-step {
+        padding: 1.25rem;
     }
 }
 

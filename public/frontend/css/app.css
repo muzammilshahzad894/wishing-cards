@@ -35,26 +35,104 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* Header */
+/* Header – sticky glass navbar */
 .site-header {
-    background: var(--card-bg);
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
-    padding: 0.75rem 0;
+    padding: 0.6rem 0;
     position: sticky;
     top: 0;
     z-index: 100;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
-.site-header .navbar-brand {
+.navbar-nav-custom {
+    min-height: 52px;
+}
+
+.navbar-brand-custom {
+    flex-shrink: 0;
+}
+
+.navbar-brand-text {
     font-family: 'Playfair Display', serif;
-    font-weight: 600;
-    font-size: 1.35rem;
-    color: var(--primary);
-    letter-spacing: -0.02em;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--text);
+    letter-spacing: -0.03em;
+    transition: color 0.2s ease;
 }
 
-.site-header .navbar-brand:hover {
-    color: var(--primary-dark);
+.navbar-brand-custom:hover .navbar-brand-text {
+    color: var(--primary);
+}
+
+/* Header search */
+.navbar-search-form {
+    position: relative;
+    max-width: 360px;
+}
+
+.navbar-search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    pointer-events: none;
+}
+
+.navbar-search-input {
+    padding-left: 2.5rem;
+    padding-right: 1rem;
+    height: 42px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--bg-subtle);
+    font-size: 0.9375rem;
+    transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.navbar-search-input::placeholder {
+    color: var(--text-muted);
+}
+
+.navbar-search-input:hover {
+    border-color: rgba(0, 0, 0, 0.12);
+    background: #fff;
+}
+
+.navbar-search-input:focus {
+    border-color: var(--primary-light);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(199, 54, 89, 0.12);
+    outline: none;
+}
+
+/* Primary CTA in header */
+.btn-create-custom {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1.25rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    background: var(--primary);
+    color: #fff !important;
+    border: none;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-create-custom:hover {
+    background: var(--primary-dark);
+    color: #fff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(199, 54, 89, 0.35);
 }
 
 /* Buttons */

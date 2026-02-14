@@ -14,15 +14,27 @@
 <body>
     <header class="site-header">
         <div class="container">
-            <nav class="d-flex align-items-center justify-content-between gap-3">
-                <a class="navbar-brand text-decoration-none" href="{{ url('/') }}">Wishing Cards</a>
-                <div class="d-flex align-items-center gap-2">
+            <nav class="navbar-nav-custom d-flex align-items-center justify-content-between gap-3 flex-nowrap">
+                <a class="navbar-brand-custom text-decoration-none d-flex align-items-center" href="{{ url('/') }}">
+                    <span class="navbar-brand-text">Wishing Cards</span>
+                </a>
+                <div class="navbar-search-wrap d-none d-md-flex flex-grow-1 mx-3 mx-xl-4">
+                    <form action="{{ url('/') }}" method="get" class="navbar-search-form w-100" role="search">
+                        <label for="navbar-search-input" class="visually-hidden">Search designs</label>
+                        <i class="fas fa-search navbar-search-icon"></i>
+                        <input type="search" id="navbar-search-input" name="q" class="navbar-search-input form-control" placeholder="Search designs..." value="{{ request('q') }}" aria-label="Search designs">
+                    </form>
+                </div>
+                <div class="d-flex align-items-center gap-2 flex-shrink-0">
                     @yield('header-right')
                     @hasSection('header-categories')
                         <div class="d-lg-none">
                             @yield('header-categories')
                         </div>
                     @endif
+                    <a href="{{ route('cards.home') }}#cards-main" class="btn btn-create-custom">
+                        <i class="fas fa-plus me-1" aria-hidden="true"></i> Create Card
+                    </a>
                 </div>
             </nav>
         </div>
