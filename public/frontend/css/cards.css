@@ -3,10 +3,10 @@
  * Modern, premium template marketplace styling (Canva/Etsy-inspired)
  */
 
-/* ========== Hero (landing-style) ========== */
+/* ========== Hero (compact, minimal) ========== */
 .cards-hero {
     position: relative;
-    padding: 3.5rem 1.5rem 4rem;
+    padding: 1.75rem 1.5rem 2.25rem;
     border-bottom: 1px solid var(--border);
     overflow: hidden;
 }
@@ -14,14 +14,14 @@
 .cards-hero-bg {
     position: absolute;
     inset: 0;
-    background: linear-gradient(145deg, rgba(199, 54, 89, 0.06) 0%, rgba(244, 162, 97, 0.05) 40%, rgba(255, 255, 255, 0) 70%);
+    background: linear-gradient(145deg, rgba(199, 54, 89, 0.06) 0%, rgba(244, 162, 97, 0.04) 50%, transparent 100%);
     pointer-events: none;
 }
 
 .cards-hero-inner {
     position: relative;
     z-index: 1;
-    max-width: 720px;
+    max-width: 560px;
     margin: 0 auto;
     text-align: center;
     padding: 0 1rem;
@@ -29,39 +29,28 @@
 
 .cards-hero-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 5.5vw, 3rem);
+    font-size: clamp(1.75rem, 4.5vw, 2.25rem);
     font-weight: 700;
     color: var(--text);
     letter-spacing: -0.03em;
-    line-height: 1.15;
-    margin: 0 0 0.5rem 0;
+    line-height: 1.2;
+    margin: 0 0 0.35rem 0;
 }
 
 .cards-hero-subtitle {
-    font-size: clamp(0.9375rem, 1.8vw, 1.125rem);
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
     color: var(--text-muted);
-    margin: 0 0 1.75rem 0;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.6;
-}
-
-.cards-hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    justify-content: center;
-    align-items: center;
+    margin: 0 0 1.25rem 0;
+    line-height: 1.5;
 }
 
 .btn-hero-primary {
     display: inline-flex;
     align-items: center;
-    padding: 0.75rem 1.5rem;
+    padding: 0.6rem 1.25rem;
     border-radius: 999px;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.9375rem;
     background: var(--primary);
     color: #fff !important;
     border: none;
@@ -73,27 +62,7 @@
     background: var(--primary-dark);
     color: #fff !important;
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(199, 54, 89, 0.35);
-}
-
-.btn-hero-secondary {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.75rem 1.5rem;
-    border-radius: 999px;
-    font-weight: 600;
-    font-size: 1rem;
-    background: var(--card-bg);
-    color: var(--text) !important;
-    border: 1px solid var(--border);
-    text-decoration: none;
-    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
-}
-
-.btn-hero-secondary:hover {
-    border-color: var(--primary-light);
-    background: var(--bg-subtle);
-    color: var(--primary) !important;
+    box-shadow: 0 6px 20px rgba(199, 54, 89, 0.35);
 }
 
 /* ========== Layout ========== */
@@ -257,8 +226,8 @@
 /* ========== Template grid – premium marketplace ========== */
 .cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
 }
 
 .card-tile {
@@ -373,66 +342,6 @@
     gap: 0.35rem;
 }
 
-/* ========== How it Works ========== */
-.cards-how-it-works {
-    padding: 4rem 1.5rem;
-    background: var(--bg-subtle);
-    border-top: 1px solid var(--border);
-}
-
-.how-it-works-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.5rem, 3vw, 1.75rem);
-    font-weight: 600;
-    color: var(--text);
-    text-align: center;
-    margin: 0 0 2rem 0;
-    letter-spacing: -0.02em;
-}
-
-.how-step {
-    background: var(--card-bg);
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    border: 1px solid var(--border);
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-    height: 100%;
-    transition: box-shadow 0.25s ease, transform 0.25s ease;
-}
-
-.how-step:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-    transform: translateY(-2px);
-}
-
-.how-step-num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-    color: #fff;
-    font-weight: 700;
-    font-size: 1rem;
-    margin-bottom: 1rem;
-}
-
-.how-step-title {
-    font-size: 1.0625rem;
-    font-weight: 600;
-    color: var(--text);
-    margin: 0 0 0.35rem 0;
-}
-
-.how-step-text {
-    font-size: 0.9375rem;
-    color: var(--text-muted);
-    margin: 0;
-    line-height: 1.5;
-}
-
 /* ========== Mobile dropdown ========== */
 .cards-dropdown-menu .dropdown-item.active {
     background: rgba(199, 54, 89, 0.12);
@@ -531,25 +440,85 @@
 }
 
 /* ========== Responsive ========== */
-@media (max-width: 991px) {
+/* Extra small: 1 column, compact hero */
+@media (max-width: 575.98px) {
     .cards-hero {
-        padding: 2.5rem 1rem 3rem;
+        padding: 1.25rem 1rem 1.75rem;
+    }
+
+    .cards-hero-title {
+        font-size: 1.5rem;
     }
 
     .cards-hero-subtitle {
-        margin-bottom: 1.5rem;
+        font-size: 0.875rem;
+        margin-bottom: 1rem;
     }
 
-    .cards-hero-actions {
-        gap: 0.5rem;
+    .btn-hero-primary {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
     }
 
-    .btn-hero-primary,
-    .btn-hero-secondary {
-        padding: 0.65rem 1.25rem;
-        font-size: 0.9375rem;
+    .cards-main {
+        padding: 1rem 0.75rem 1.5rem;
     }
 
+    .cards-section-title {
+        font-size: 1.0625rem;
+    }
+
+    .cards-section-count {
+        font-size: 0.8125rem;
+    }
+
+    .cards-grid {
+        gap: 1rem;
+    }
+
+    .card-tile-preview .bday-card {
+        transform: scale(0.45);
+    }
+
+    .card-tile:hover .card-tile-preview .bday-card {
+        transform: scale(0.48);
+    }
+
+    .card-tile-footer {
+        padding: 0.5rem 0.75rem;
+    }
+
+    .card-tile-title {
+        font-size: 0.8125rem;
+    }
+
+    .card-tile-cta {
+        font-size: 0.75rem;
+    }
+}
+
+/* Small and up: 2 columns; sidebar still hidden until lg */
+@media (min-width: 576px) and (max-width: 991px) {
+    .cards-hero {
+        padding: 1.5rem 1rem 2rem;
+    }
+
+    .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+    }
+
+    .card-tile-preview .bday-card {
+        transform: scale(0.52);
+    }
+
+    .card-tile:hover .card-tile-preview .bday-card {
+        transform: scale(0.56);
+    }
+}
+
+/* Sidebar hidden on mobile/tablet */
+@media (max-width: 991px) {
     .cards-page {
         min-height: auto;
     }
@@ -565,39 +534,13 @@
     .cards-main-header {
         margin-bottom: 1.25rem;
     }
+}
 
+/* Large: sidebar visible, grid auto-fill */
+@media (min-width: 992px) {
     .cards-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-    }
-
-    .card-tile-preview .bday-card {
-        transform: scale(0.5);
-    }
-
-    .card-tile:hover .card-tile-preview .bday-card {
-        transform: scale(0.54);
-    }
-
-    .card-tile-footer {
-        padding: 0.6rem 0.75rem;
-        flex-wrap: wrap;
-    }
-
-    .card-tile-title {
-        font-size: 0.8125rem;
-    }
-
-    .card-tile-cta {
-        font-size: 0.75rem;
-    }
-
-    .cards-how-it-works {
-        padding: 3rem 1rem;
-    }
-
-    .how-step {
-        padding: 1.25rem;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 1.5rem;
     }
 }
 

@@ -5,7 +5,7 @@
 @section('header-categories')
 <div class="dropdown">
     <button class="nav-categories-btn dropdown-toggle" type="button" id="mobileCategoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="fas fa-th-large"></i> {{ $currentCategory ? ($categories[$currentCategory] ?? 'Categories') : 'All' }}
+        <i class="fas fa-th-large"></i> <span class="d-inline d-sm-none">Menu</span><span class="d-none d-sm-inline">{{ $currentCategory ? ($categories[$currentCategory] ?? 'Categories') : 'All' }}</span>
     </button>
     <ul class="dropdown-menu dropdown-menu-end cards-dropdown-menu" aria-labelledby="mobileCategoryDropdown">
         <li><a class="dropdown-item {{ $currentCategory === null ? 'active' : '' }}" href="{{ route('cards.home') }}"><i class="fas fa-layer-group me-2"></i>All</a></li>
@@ -21,15 +21,10 @@
     <div class="cards-hero-bg"></div>
     <div class="container cards-hero-inner">
         <h1 class="cards-hero-title">Create Your Perfect Card</h1>
-        <p class="cards-hero-subtitle">Choose from beautiful templates and personalize in seconds. Send warmth to someone special.</p>
-        <div class="cards-hero-actions">
-            <a href="#cards-main" class="btn btn-hero-primary">
-                <i class="fas fa-palette me-2" aria-hidden="true"></i> Browse Designs
-            </a>
-            <a href="#how-it-works" class="btn btn-hero-secondary">
-                How it Works <i class="fas fa-arrow-right ms-1" aria-hidden="true"></i>
-            </a>
-        </div>
+        <p class="cards-hero-subtitle">Choose from beautiful templates and personalize in seconds.</p>
+        <a href="#cards-main" class="btn btn-hero-primary">
+            <i class="fas fa-palette me-2" aria-hidden="true"></i> Browse Designs
+        </a>
     </div>
 </section>
 
@@ -92,37 +87,67 @@
         @endif
     </div>
 </div>
-
-<section class="cards-how-it-works" id="how-it-works" aria-label="How it works">
-    <div class="container">
-        <h2 class="how-it-works-title">How it Works</h2>
-        <div class="row g-4 justify-content-center">
-            <div class="col-sm-6 col-lg-4">
-                <div class="how-step">
-                    <span class="how-step-num" aria-hidden="true">1</span>
-                    <h3 class="how-step-title">Choose a design</h3>
-                    <p class="how-step-text">Browse templates and pick one you love.</p>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-                <div class="how-step">
-                    <span class="how-step-num" aria-hidden="true">2</span>
-                    <h3 class="how-step-title">Personalize</h3>
-                    <p class="how-step-text">Add your photo and message in seconds.</p>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-4">
-                <div class="how-step">
-                    <span class="how-step-num" aria-hidden="true">3</span>
-                    <h3 class="how-step-title">Share or download</h3>
-                    <p class="how-step-text">Send the link or download your card.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 @endsection
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('frontend/css/cards.css') }}">
+@endpush
+
+@push('scripts')
+<script>
+(function() {
+    var designsData = @json($designs->isEmpty() ? [] : $designs->map(fn($d) => ['name' => $d->name, 'url' => route('cards.create', $d)])->values());
+    var input = document.getElementById('navbar-search-input');
+    var resultsEl = document.getElementById('navbar-search-results');
+    if (!input || !resultsEl || !designsData.length) return;
+
+    var hideTimeout;
+    function showResults(items) {
+        resultsEl.innerHTML = '';
+        resultsEl.hidden = false;
+        input.setAttribute('aria-expanded', 'true');
+        if (items.length === 0) {
+            var empty = document.createElement('div');
+            empty.className = 'navbar-search-item navbar-search-empty';
+            empty.textContent = 'No matching designs';
+            resultsEl.appendChild(empty);
+            return;
+        }
+        items.slice(0, 8).forEach(function(d) {
+            var a = document.createElement('a');
+            a.href = d.url;
+            a.className = 'navbar-search-item dropdown-item';
+            a.setAttribute('role', 'option');
+            a.textContent = d.name;
+            a.addEventListener('click', function(e) { e.preventDefault(); window.location.href = d.url; });
+            resultsEl.appendChild(a);
+        });
+    }
+    function hideResults() {
+        hideTimeout = setTimeout(function() {
+            resultsEl.hidden = true;
+            resultsEl.innerHTML = '';
+            input.setAttribute('aria-expanded', 'false');
+        }, 150);
+    }
+    function filterDesigns(query) {
+        var q = (query || '').trim().toLowerCase();
+        if (!q) return [];
+        return designsData.filter(function(d) { return d.name.toLowerCase().indexOf(q) !== -1; });
+    }
+    input.addEventListener('input', function() {
+        clearTimeout(hideTimeout);
+        var q = this.value.trim();
+        showResults(q ? filterDesigns(q) : []);
+    });
+    input.addEventListener('focus', function() {
+        clearTimeout(hideTimeout);
+        if (this.value.trim()) showResults(filterDesigns(this.value));
+    });
+    input.addEventListener('blur', hideResults);
+    resultsEl.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+    });
+})();
+</script>
 @endpush
