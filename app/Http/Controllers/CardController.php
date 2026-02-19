@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Design;
+use App\Models\Template;
 
 class CardController extends Controller
 {
@@ -46,5 +47,15 @@ class CardController extends Controller
             abort(404, 'This design is not available.');
         }
         return view('cards.create', compact('design'));
+    }
+
+    /**
+     * Card generator from Fabric template: user fills photo zones and text zones, then downloads.
+     * GET /cards/{template}
+     */
+    public function showTemplate(Template $template)
+    {
+        $template->load('zones');
+        return view('frontend.cards.show', compact('template'));
     }
 }

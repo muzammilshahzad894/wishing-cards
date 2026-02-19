@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('admin/css/app.css') }}">
     @yield('styles')
+    @stack('styles')
 </head>
 <body>
     <!-- Sidebar Overlay for Mobile -->
@@ -39,6 +40,12 @@
                 <a href="{{ route('admin.designs.index') }}" class="{{ request()->routeIs('admin.designs.*') ? 'active' : '' }}">
                     <i class="fas fa-image"></i>
                     <span>Designs</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.templates.index') }}" class="{{ request()->routeIs('admin.templates.*') ? 'active' : '' }}">
+                    <i class="fas fa-th-large"></i>
+                    <span>Card Templates</span>
                 </a>
             </li>
         </ul>
@@ -122,5 +129,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('admin/js/app.js') }}"></script>
     @yield('scripts')
+    @stack('scripts')
 </body>
 </html>
